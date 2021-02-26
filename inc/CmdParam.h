@@ -1,0 +1,314 @@
+#ifndef CMD_PARAM_H
+#define CMD_PARAM_H
+
+#include "DataType.h"
+
+
+#define TRACE_CHOICE_MAX_NUMBER	20
+#define PARAM_GET_MAX_NUMBER	20
+#define PARAM_SET_MAX_NUMBER	20
+
+
+typedef enum TRACE_STATE_ENUM
+{
+   TRACE_STATE_NONE,
+   TRACE_STATE_IDLE,
+   TRACE_STATE_BUSY,
+   TRACE_STATE_SUSPEND,
+   TRACE_STATE_STOPPED,
+   TRACE_STATE_FINISHED,
+}TRACE_STATE_ENUM;
+
+typedef enum DATA_TYPE_ENUM
+{
+   MIN_DATA_TYPE,
+   CHAR_TYPE,
+   UNSIGNED_CHAR_TYPE,
+   SHORT_TYPE,
+   UNSIGNED_SHORT_TYPE,
+   INT_TYPE,
+   UNSIGNED_INT_TYPE,
+   FLOAT_TYPE,
+   DOUBLE_TYPE,
+   TYPEDEF_ENUM_TYPE,
+   MAX_DATA_TYPE,
+}DATA_TYPE_ENUM;
+
+typedef enum IF_RELATION_ENUM
+{
+   GREATER_ENUM,
+   GREATER_EQUAL_ENUM,
+   EQUAL_ENUM,
+   LESS_EQUAL_ENUM,
+   LESS_ENUM,
+   NOT_EQUAL_ENUM,
+}IF_RELATION_ENUM;
+
+typedef enum NOISE_POSITION_ENUM
+{
+   INJ_LOS_X,
+   INJ_SS_AS_H1,
+}NOISE_POSITION_ENUM;
+
+typedef enum CMD_CtrlMode
+{
+   CTRL_NONE = 0,
+   SS_SS2LOS,
+   SS_SS2LOS_UNLOAD,
+   SS_SS2EC_ZEROING,
+   SS_SS2EC_DOCK,
+   SS_SS2EC_MEASURE,
+   SS_SS2EC_SWAP,
+   SS_SS2EC_EXPOSE,
+   SS_SS2EC_EXPOSE_WET,
+   LOS_LOS2BM,
+   LOS_LOS2SF,
+   LOS_LOS2SF_GB4,
+   LOS_LOS2SS,
+   LOS_LOS2SS_DOCK,
+   LOS_LOS2SS_EXPOSE,
+   LA_LA2BM,
+   LA_LA2LOS,
+   BM_BM2SF,
+   POMO_LOS2BM,
+   POMO_LOS2SF,
+   POMO_LOS2SF_GB4,
+   POMO_LOS2SF_UNLOAD,
+   POMO_SS2EC_ZEROING,
+   POMO_SS2EC_DOCK,
+   POMO_SS2EC_MEASURE,
+   POMO_SS2EC_SWAP,
+   POMO_SS2EC_EXPOSE,
+   POMO_SS2EC_EXPOSE_WET,
+   SPG_Q_EXPOSE,
+   SPG_Q_MEAS,
+   SPG_Q_SWAP,
+}CMD_CtrlMode;
+
+typedef enum RDC_STATE_ENUM
+{
+   RDC_STATE_IDLE,
+   RDC_STATE_WAIT,
+   RDC_STATE_BUSY,
+   RDC_STATE_ERR,
+}RDC_STATE_ENUM;
+
+typedef enum CMD_STRING_ENUM
+{
+	INITIAL_DATA = 0,
+	
+   PARAM_SET_DATA = 0,
+   PARAM_GET_DATA,
+   PARAM_SET_FILE,
+   PARAM_GET_FILE,
+   TRACE_START = 0,
+   TRACE_STOP,
+   TRACE_RESET,
+   TRACE_CLEAR,
+   TRACE_GET_STATE,
+   TRACE_GET_DATE,
+   TRACE_SET_PARAM,
+   TRACE_GET_PARAM,
+   TRACE_SET_CHOICE,
+   TRACE_GET_CHOICE,
+   INJ_START_ALL = 0,
+   INJ_STOP_ALL,
+   INJ_CLEAR_ALL,
+   INJ_RESET_ALL,
+   INJ_GET_ALL_STATE,
+   INJ_START,
+   INJ_STOP,
+   INJ_CLEAR,
+   INJ_RESET,
+   INJ_GET_STATE,
+   INJ_SET_PARAM,
+   INJ_GET_PARAM,
+   EVENT_SET_PARAM = 0,
+   EVENT_GET_PARAM,
+   EVENT_GET_COUNT,
+   MONITOR_TRACE_DATA = 0,
+   MONITOR_STATE_DATA,
+   MONITOR_PARAM_DATA,
+   RDC_START = 0,
+   RDC_GET_COUNT,
+   RDC_GET_INDEX,
+   RDC_GET_STATE,
+   RDC_FORCE_CLEAN,
+   
+   C_WS_NONE = 0,
+   C_WS_INIT_BAMO_LA_OL,
+   C_WS_INIT_POMO_LOS_OL,
+   C_WS_INIT_BAMO_BM_FULL,
+   C_WS_INIT_POMO_FULL,
+   C_WS_INIT_FULL,
+   C_WS_TERM_BAMO_LA_OL,
+   C_WS_TERM_POMO_LOS_OL,
+   C_WS_TERM_BAMO_BM_OL,
+   C_WS_TERM_POMO_FULL,
+   C_WS_TERM_FULL,
+   C_WS_NORMAL,
+   C_WS_DEBUG,
+   C_WS_READY,
+   C_WS_TERM,
+   C_WS_RUNNING,
+   C_WS_RUNDOWN,
+   C_MD_NONE = 0,
+   C_POMO_INIT_LOS_OL = 101,
+   C_POMO_INIT_SS_FULL,
+   C_POMO_INIT_FULL,
+   C_POMO_TERM_LOS_OL = 201,
+   C_POMO_TERM_SS_FULL,
+   C_POMO_TERM_FULL,
+   C_BAMO_INIT_LA_OL = 301,
+   C_BAMO_INIT_BM_FULL,
+   C_BAMO_INIT_FULL,
+   C_BAMO_TERM_LA_OL = 401,
+   C_BAMO_TERM_BM_FULL,
+   C_BAMO_TERM_FULL,
+   C_SPG_Q_TRIGGER = 501,
+   C_SPG_Q_RESET,
+   C_SPG_Q_ABORT,
+   C_MD_NORMAL = 601,
+   C_MD_DEBUG,
+   C_MD_READY,
+   C_MD_TERM,
+   C_MD_RUNNING,
+   C_MD_EXIT,
+   C_MD_CTRLMODE,
+   C_CP_NONE = 0,
+   C_SS_INIT_OL = 101,
+   C_SS_INIT_VERCL,
+   C_SS_INIT_VERHOME,
+   C_SS_INIT_ALLCL,
+   C_SS_INIT_ALLHOME,
+   C_SS_INIT_FULL,
+   C_SS_TERM_HOROL = 201,
+   C_SS_TERM_ALLOL,
+   C_SS_TERM_FULL,
+   C_LOS_INIT_OL = 301,
+   C_LOS_INIT_HORCL,
+   C_LOS_INIT_RZHOME,
+   C_LOS_INIT_ALLCL,
+   C_LOS_INIT_GRAV_70,
+   C_LOS_INIT_DZHOME,
+   C_LOS_INIT_GRAV_100,
+   C_LOS_INIT_FULL,
+   C_LOS_TERM_VEROL = 401,
+   C_LOS_TERM_ALLOL,
+   C_LOS_TERM_FULL,
+   C_LA_INIT_OL = 501,
+   C_LA_INIT_CL,
+   C_LA_INIT_FOLLOW,
+   C_LA_INIT_FULL,
+   C_LA_TERM_OL = 601,
+   C_LA_TERM_FULL,
+   C_BM_INIT_OL = 501,
+   C_BM_INIT_CL,
+   C_BM_INIT_FULL,
+   C_BM_TERM_OL = 701,
+   C_BM_TERM_FULL,
+   C_CP_NORMAL = 801,
+   C_CP_DEBUG,
+   C_CP_READY,
+   C_CP_RUNNING,
+   C_CP_EXIT,
+   C_CP_CTRLMODE,
+   C_SA_NONE = 0,
+   C_SA_DISABLE,
+   C_SA_OL,
+   C_SA_CL,
+   C_SA_INIT,
+   C_SPG_NONE = 0,
+   C_SPG_ABORT,
+   C_SPG_STEP = 100,
+   C_SPG_JOGTO,
+   C_SPG_P2P3,
+   C_SPG_P2P4,
+   C_SPG_POLY5COMP,
+}CMD_STRING_ENUM;
+
+
+
+typedef struct VARIABLE_INFO_STRCT
+{
+   int               iOffset;
+   int               iSize;
+}VARIABLE_INFO_STRCT;
+
+typedef struct TRACE_PARAM_STRUCT
+{
+   int               time;
+   int               frequent;
+   int               start_event_id;
+   int               stop_event_id;
+}TRACE_PARAM_STRUCT;
+
+typedef struct TRACE_CHOICE_STRUCT
+{
+   VARIABLE_INFO_STRCT choices[TRACE_CHOICE_MAX_NUMBER];
+}TRACE_CHOICE_STRUCT;
+
+typedef struct TRACE_DATA_STRUCT
+{
+   int               count;
+   char              folder[255];
+}TRACE_DATA_STRUCT;
+
+typedef struct EVENT_PARAM_STRUCT
+{
+   IF_RELATION_ENUM  relation;
+   DATA_TYPE_ENUM    data_type;
+   VARIABLE_INFO_STRCT left_variable;
+   VARIABLE_INFO_STRCT right_variable;
+   double            right_value;
+}EVENT_PARAM_STRUCT;
+
+typedef struct PARAM_GET_STRUCT
+{
+   VARIABLE_INFO_STRCT choices[PARAM_GET_MAX_NUMBER];
+}PARAM_GET_STRUCT;
+
+typedef struct PARAM_SET_STRUCT
+{
+   VARIABLE_INFO_STRCT choices[PARAM_SET_MAX_NUMBER];
+   char              data[160];
+}PARAM_SET_STRUCT;
+
+typedef struct PARAM_FILE_STRUCT
+{
+   VARIABLE_INFO_STRCT variable;
+   char              fileName[200];
+}PARAM_FILE_STRUCT;
+
+typedef struct INJ_PARAM_STRUCT
+{
+   NOISE_POSITION_ENUM position;
+   int               start_id;
+   int               stop_id;
+   char              fileName[200];
+   int               count;
+}INJ_PARAM_STRUCT;
+
+typedef struct SERVO_PARAM_STRUCT
+{
+   int               dir;
+   int               subCmd;
+   int               reserved[8];
+   double            pd[8];
+}SERVO_PARAM_STRUCT;
+
+typedef struct SERVO_CP_CTRLMODE_STRUCT
+{
+   int               dir;
+   CMD_CtrlMode      subCmd;
+   int               reserved[8];
+   double            pd[8];
+}SERVO_CP_CTRLMODE_STRUCT;
+
+typedef struct MONITOR_DATA_STRUCT
+{
+   int               variable[40];
+}MONITOR_DATA_STRUCT;
+
+
+#endif

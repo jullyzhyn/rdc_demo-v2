@@ -610,11 +610,66 @@ void RdcItemPrint(int start, int end)
 	
 }
 
-
-void RdcBufPrint(int start, int end)
+void RDCShow()
 {
-	int iTmp=0;
+	int iTmp = 0;
+	char buffer[256*RDC_ITEM_NUM_MAX];
+	memset(buffer, 0, 256*RDC_ITEM_NUM_MAX);
+	RDC_ITEM_STRUCT *pRDC;
+	
+	for(; iTmp<g_iRdcCount; iTmp++)
+	{
+		pRDC = &g_stRdcItems[iTmp];
 
+		switch(pRDC->eType)
+		{
+		case RDC_OPER_CMD:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_CMD: obj: %d  %d  %d  %d  %d;  dir: %d;  cmd: %d;  subCmd: %d\n"
+					"pi: %d %d %d %d %d %d %d %d;  pd: %lf %lf %lf %lf %lf %lf %lf %lf\n",
+					pRDC->param.stCmd.iObj[0], pRDC->param.stCmd.iObj[1], pRDC->param.stCmd.iObj[2], pRDC->param.stCmd.iObj[3], pRDC->param.stCmd.iObj[4],
+					pRDC->param.stCmd.dir, pRDC->param.stCmd.iCmd, pRDC->param.stCmd.iSubCmd,
+					pRDC->param.stCmd.pi[0], pRDC->param.stCmd.pi[1], pRDC->param.stCmd.pi[2], pRDC->param.stCmd.pi[3],
+					pRDC->param.stCmd.pi[4], pRDC->param.stCmd.pi[5], pRDC->param.stCmd.pi[6], pRDC->param.stCmd.pi[7],
+					pRDC->param.stCmd.pd[0], pRDC->param.stCmd.pd[1], pRDC->param.stCmd.pd[2], pRDC->param.stCmd.pd[3],
+					pRDC->param.stCmd.pd[4], pRDC->param.stCmd.pd[5], pRDC->param.stCmd.pd[6], pRDC->param.stCmd.pd[7]);
+			break;
+			
+		case RDC_OPER_IF:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_IF: eventId: %d, index no = %d\n", pRDC->param.stIf.iEventId, pRDC->param.stIf.iIndexNo);								
+			break;
+		
+		case RDC_OPER_ELSEIF:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_ELSEIF: eventId: %d, index no = %d\n", pRDC->param.stIf.iEventId, pRDC->param.stIf.iIndexNo);								
+			break;
+			
+		case RDC_OPER_WAIT:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_WAIT: eventId: %d;  time: %d\n", pRDC->param.stWait.iEventId, pRDC->param.stWait.iLoopCnt);
+			break;
+				
+		case RDC_OPER_FOR:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_FOR: loop count = %d\n", pRDC->param.stFor.iLoopCnt);
+			break;
+			
+		case RDC_OPER_WHILE:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_WHILE: eventId: %d\n", pRDC->param.stWhile.iEventId);
+			break;
+
+		case RDC_OPER_JUMP:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_ELSE: index = %d\n", pRDC->param.stJump.iIndex);
+			break;
+								
+		case RDC_OPER_ELSE:
+			sprintf(&buffer[strlen(buffer)], "RDC_OPER_ELSE: \n");		
+			break;		
+			
+		default:
+			g_iErrCode = RDC_ITEM_OUT_LIMIT;			
+			break;
+		}
+		
+	}
+	
+	printf(buffer);
 }
 
 
